@@ -13,12 +13,32 @@ class Memorama extends StatefulWidget {
 
 class _MemoramaState extends State<Memorama> {
   final random = Random();
-
-  late List<Datacuadros> dataCuadros;
   bool game = false;
   late int columns = 3 + (random.nextDouble() * 5).toInt();
   late int rows = 3 + (random.nextDouble() * 5).toInt();
   var flag = [true, true, true, true, true, true, true];
+  late List<Color> colors;
+  late List<Datacuadros> cuadros;
+
+  @override
+  void initState(){
+    super.initState();
+      colors = [];
+
+      for(int i = 0; i < columns*rows/2; i++){
+        colors.add(cons.colors[i]);
+        colors.add(cons.colors[i]);
+      }
+
+      colors.shuffle();
+
+      cuadros = List.generate(columns*rows, (index){
+        return Datacuadros(
+          color: colors[index],
+          index: index ~/2,
+        );
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +77,8 @@ class _MemoramaState extends State<Memorama> {
                 height: 500,
                 child:
                   GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: columns,
                       childAspectRatio: 1,
@@ -66,7 +88,12 @@ class _MemoramaState extends State<Memorama> {
                     itemCount: columns*rows,
                     itemBuilder: (BuildContext context, int index) {
                       return Cuadro(
-                        color: cons.colors[0],
+                        datacuadro: cuadros[index],
+                        onTap: (){
+                          setState((){
+                            cuadros[index].active = !cuadros[index].active;
+                          });
+                        }
                       );
                     }
                   )

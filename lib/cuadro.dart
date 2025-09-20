@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dataCuadros.dart';
 
 class Cuadro extends StatefulWidget {
-  final Color color;
+  final Datacuadros datacuadro;
+  final VoidCallback onTap;
 
-  Cuadro({Key? key, required this.color}) : super(key : key);
+
+  Cuadro({Key? key, required this.datacuadro, required this.onTap}) : super(key : key);
 
   @override
   _CuadroState createState() => _CuadroState();
@@ -24,7 +27,7 @@ class _CuadroState extends State<Cuadro> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: active ? widget.color : Colors.grey,
+          color: active ? widget.datacuadro.color : Colors.grey,
           borderRadius: BorderRadius.circular(8),
         )
       )
