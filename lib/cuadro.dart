@@ -1,36 +1,23 @@
 import 'package:flutter/material.dart';
 import 'dataCuadros.dart';
 
-class Cuadro extends StatefulWidget {
+class Cuadro extends StatelessWidget {
   final Datacuadros datacuadro;
   final VoidCallback onTap;
 
 
-  Cuadro({Key? key, required this.datacuadro, required this.onTap}) : super(key : key);
-
-  @override
-  _CuadroState createState() => _CuadroState();
-}
-
-class _CuadroState extends State<Cuadro> {
-
-  bool active = false;
-
-
+  const Cuadro({Key? key, required this.datacuadro, required this.onTap}) : super(key : key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        setState((){
-          active = !active;
-        });
-      },
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: active ? widget.datacuadro.color : Colors.grey,
+          color: datacuadro.active || datacuadro.paired? datacuadro.color : Colors.grey,
           borderRadius: BorderRadius.circular(8),
         )
       )
     );
   }
 }
+
