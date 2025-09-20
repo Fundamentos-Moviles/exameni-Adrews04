@@ -14,14 +14,41 @@ class Memorama extends StatefulWidget {
 class _MemoramaState extends State<Memorama> {
   final random = Random();
   bool game = false;
-  late int columns = (2 + (random.nextDouble() * 1).toInt()) * 2;
-  late int rows = 2 + (random.nextDouble() * 3).toInt();
+  late int columns = (2 + (random.nextDouble() * 2).toInt()) * 2;
+  late int rows = 2 + (random.nextDouble() * 5).toInt();
   var turn = false;
   late List<Color> colors;
   late List<Datacuadros> cuadros;
   late int remainingPairs = (columns * rows / 2).toInt();
   int? firstSquare;
   int? secondSquare;
+
+  void startGame() {
+    columns = (2 + (random.nextDouble() * 1).toInt()) * 2;
+    rows = 2 + (random.nextDouble() * 3).toInt();
+
+    game = false;
+    turn = false;
+    remainingPairs = (columns * rows / 2).toInt();
+    firstSquare = null;
+    secondSquare = null;
+
+    colors.clear();
+    for (int i = 0; i < columns * rows / 2; i++) {
+      colors.add(cons.colors[i]);
+      colors.add(cons.colors[i]);
+    }
+    colors.shuffle();
+
+    cuadros = List.generate(columns * rows, (index) {
+      return Datacuadros(
+        color: colors[index],
+        index: index ~/ 2,
+      );
+    });
+
+    setState(() {});
+  }
 
   void resetearTurno() {
     firstSquare = null;
@@ -154,6 +181,12 @@ class _MemoramaState extends State<Memorama> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: ElevatedButton(onPressed: (){startGame();},
+              child: const Text('Reiniciar Juego'),
+            )
+          )
         ],
       ),
     );
