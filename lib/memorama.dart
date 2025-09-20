@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'constantes.dart' as cons;
+import 'cuadro.dart';
+import 'dataCuadros.dart';
+import 'dart:math';
 
 class Memorama extends StatefulWidget {
   const Memorama({super.key});
@@ -9,11 +12,15 @@ class Memorama extends StatefulWidget {
 }
 
 class _MemoramaState extends State<Memorama> {
-  @override
+  final random = Random();
+
+  late List<Datacuadros> dataCuadros;
   bool game = false;
-  final int columns = 2;
-  final int rows = 2;
+  late int columns = 3 + (random.nextDouble() * 5).toInt();
+  late int rows = 3 + (random.nextDouble() * 5).toInt();
   var flag = [true, true, true, true, true, true, true];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
@@ -45,19 +52,24 @@ class _MemoramaState extends State<Memorama> {
                       )
                     )
                   ),
-              GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: columns,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10
-                ),
-                itemCount: columns*rows,
-                itemBuilder: (BuildContext context, int index) {
-                  return Cuadro(
-                    color: cons.colors[0],
-                  );
-                }
+              Container(
+                width: 500,
+                height: 500,
+                child:
+                  GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: columns,
+                      childAspectRatio: 1,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10
+                    ),
+                    itemCount: columns*rows,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Cuadro(
+                        color: cons.colors[0],
+                      );
+                    }
+                  )
               )
             ]
         )
