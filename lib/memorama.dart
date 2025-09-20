@@ -24,8 +24,8 @@ class _MemoramaState extends State<Memorama> {
   int? secondSquare;
 
   void startGame() {
-    columns = (2 + (random.nextDouble() * 1).toInt()) * 2;
-    rows = 2 + (random.nextDouble() * 3).toInt();
+    late int columns = (2 + (random.nextDouble() * 2).toInt()) * 2;
+    late int rows = 2 + (random.nextDouble() * 5).toInt();
 
     game = false;
     turn = false;
